@@ -61,6 +61,33 @@ function SignUp() {
           />
         </Form.Group>
 
+        <Form.Group controlId="formPhoneNumber">
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            name="phoneNumber"
+            type="tel"
+            placeholder="eg: 9868986821"
+            minlength="8"
+            maxlength="10"
+            onChange={handleChange}
+            required
+          />
+          <Form.Text class="text-muted">
+            Please enter number without country code but enter region code for
+            landlines
+          </Form.Text>
+        </Form.Group>
+
+        <Form.Group controlId="formUserType">
+          <Form.Label>User Type</Form.Label>
+          <Form.Control name="userType" as="select" onChange={handleChange}>
+            <option value="T">Tourist</option>
+            <option value="V">Volunteer</option>
+            <option value="R">Rescue Team</option>
+            <option value="H">Health Post / Hospital</option>
+          </Form.Control>
+        </Form.Group>
+
         <Form.Group controlId="formPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
