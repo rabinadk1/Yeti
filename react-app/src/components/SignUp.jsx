@@ -26,67 +26,71 @@ function SignUp() {
   };
 
   return (
-    <Form method="post" className="form-signup" onSubmit={handleSubmit}>
-      <Form.Group controlId="formFirstName">
-        <Form.Label>First Name</Form.Label>
-        <Form.Control
-          name="firstName"
-          placeholder="First Name"
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
+    <>
+      <h3 className="text-center mt-2">Sign Up</h3>
 
-      <Form.Group controlId="formLastName">
-        <Form.Label>Last Name</Form.Label>
-        <Form.Control
-          name="lastName"
-          placeholder="Last Name"
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
+      <Form method="post" className="form-signup" onSubmit={handleSubmit}>
+        <Form.Group controlId="formFirstName">
+          <Form.Label>First Name</Form.Label>
+          <Form.Control
+            name="firstName"
+            placeholder="eg: John"
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control
-          name="email"
-          type="email"
-          placeholder="Enter Email"
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
+        <Form.Group controlId="formLastName">
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control
+            name="lastName"
+            placeholder="eg: Doe"
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          name="password"
-          type="password"
-          placeholder="Enter Password"
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
+        <Form.Group controlId="formEmail">
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control
+            name="email"
+            type="email"
+            placeholder="eg: pranav@explorer.com"
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formConfirmPassword">
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control
-          name="confirmPassword"
-          type="password"
-          placeholder="Re-enter Password"
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
+        <Form.Group controlId="formPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            name="password"
+            type="password"
+            placeholder="Enter Password"
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-      <Button variant="primary" type="submit" block>
-        Submit
-      </Button>
-      <Form.Text className="forgotPassword text-right">
-        Already Registered?<Link to="/sign-in">Sign In</Link>
-      </Form.Text>
-    </Form>
+        <Form.Group controlId="formConfirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            name="confirmPassword"
+            type="password"
+            placeholder="Re-enter Password"
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" block>
+          Submit
+        </Button>
+        <Form.Text className="text-center">
+          Already Registered? <Link to="/log-in">Sign In</Link>
+        </Form.Text>
+      </Form>
+    </>
   );
 }
 

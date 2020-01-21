@@ -17,45 +17,49 @@ function Login() {
   };
 
   return (
-    <Form className="form-signin" method="post" onSubmit={handleSubmit}>
-      <Form.Group controlId="formEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
+    <>
+      <h3 className="text-center mt-2">Login</h3>
 
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
+      <Form className="form-signin" method="post" onSubmit={handleSubmit}>
+        <Form.Group controlId="formEmail">
+          <Form.Label className="sr-only">Email address</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formRemberMeCheckbox">
-        <Form.Check
-          type="checkbox"
-          name="rememberMe"
-          label="Remember Me"
-          onChange={handleChange}
-        />
-      </Form.Group>
+        <Form.Group controlId="formPassword">
+          <Form.Label className="sr-only">Password</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
 
-      <Button variant="primary" type="submit" block>
-        Submit
-      </Button>
-      <Form.Text className="forgotPassword text-right">
-        <Link to="#">Forgot Password?</Link>
-      </Form.Text>
-    </Form>
+        <Form.Group controlId="formRemberMeCheckbox">
+          <Form.Check
+            type="checkbox"
+            name="rememberMe"
+            label="Remember Me"
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" block>
+          Submit
+        </Button>
+        <Form.Text className="text-center">
+          <Link to="#">Forgot Password?</Link>
+        </Form.Text>
+      </Form>
+    </>
   );
 }
 
