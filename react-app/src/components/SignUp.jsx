@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import GetGeoLocation from "../utilities/location.js";
 
 function SignUp() {
   const [state, setState] = useState({});
@@ -11,10 +12,17 @@ function SignUp() {
   };
 
   const handleSubmit = event => {
+    event.preventDefault();
     if (state["password"] !== state["confirmPassword"])
       alert("The passwords don't match!");
-    else alert("Your Form Has Been Submitted!");
-    event.preventDefault();
+    else {
+      GetGeoLocation(({ coords }) => {
+        const position = { location: [coords.latitude, coords.longitude] };
+        if (coords.altitude) position.altitude = coords.altitude;
+        setState({ ...state, ...position });
+        alert("Your Form Has Been Submitted!");
+      }, true);
+    }
   };
 
   return (
