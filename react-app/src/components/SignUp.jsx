@@ -12,7 +12,7 @@ const SignUpPage = () => {
     name: "",
     email: "",
     phoneNumber: "",
-    userType: "T",
+    role: "T",
     password: "",
     confirmPassword: "",
     error: null
@@ -43,9 +43,13 @@ const SignUpPage = () => {
             .set({
               name: state.name,
               phoneNumber: state.phoneNumber,
-              userType: state.userType
+              role: state.role
             })
         )
+        .then(() => {
+          const addRole = firebase.functions.httpsCallable("addRole");
+          addRole({ email: state.email, role: state.role });
+        })
         .then(() => {
           alert("Your Form Has Been Submitted!");
           setState(InitialState);
@@ -107,10 +111,10 @@ const SignUpPage = () => {
         <Form.Group controlId="formUserType">
           <Form.Label>User Type</Form.Label>
           <Form.Control
-            name="userType"
+            name="role"
             as="select"
             onChange={handleChange}
-            selected={state.userType}
+            selected={state.role}
           >
             <option value="T">Tourist</option>
             <option value="V">Volunteer</option>
