@@ -67,12 +67,12 @@ function SignUp() {
             name="phoneNumber"
             type="tel"
             placeholder="eg: 9868986821"
-            minlength="8"
-            maxlength="10"
+            minLength="8"
+            maxLength="10"
             onChange={handleChange}
             required
           />
-          <Form.Text class="text-muted">
+          <Form.Text className="text-muted">
             Please enter number without country code but enter region code for
             landlines
           </Form.Text>
