@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import * as ROUTES from "../constants/routes";
+import Alert from "react-bootstrap/Alert"
 import FirebaseContext from "./Firebase/context";
 
 const LoginPage = () => {
