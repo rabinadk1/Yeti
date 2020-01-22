@@ -36,6 +36,16 @@ const SignUpPage = () => {
       // }, true);
       firebase
         .CreateUserWithEmailAndPassword(state.email, state.password)
+        .then(credentials =>
+          firebase.db
+            .collection("users")
+            .doc(credentials.user.id)
+            .set({
+              name: state.name,
+              phoneNumber: state.phoneNumber,
+              userType: state.userType
+            })
+        )
         .then(() => {
           alert("Your Form Has Been Submitted!");
           setState(InitialState);

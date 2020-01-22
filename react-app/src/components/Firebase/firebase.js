@@ -1,5 +1,7 @@
 import app from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
+import "firebase/functions";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,6 +19,21 @@ class Firebase {
   constructor() {
     app.initializeApp(firebaseConfig);
     this.auth = app.auth();
+    this.db = app.firestore();
+    // enable offline data
+    this.db.enablePersistence().catch(err => {
+      switch (err.code) {
+        case "failed-precondition":
+          // probably multible tabs open at once
+          console.log("persistance failed");
+          break;
+        default:
+          // lack of browser support for the feature for error code "unimplemented"
+          console.log("persistance not available");
+      }
+    });
+
+    this.functions = app.functions();
   }
 
   // Auth API

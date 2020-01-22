@@ -17,7 +17,7 @@ const App = () => {
     firebase.auth.onAuthStateChanged(user => {
       user ? setAuthUser(user) : setAuthUser(null);
     });
-  }, []);
+  }, [firebase.auth]);
 
   return (
     <Router>
