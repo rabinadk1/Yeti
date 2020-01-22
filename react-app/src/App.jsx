@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,48 +8,58 @@ import {
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
 
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
-
+import LoginPage from "./components/Login";
+import SignUpPage from "./components/SignUp";
+import Firebase, { FirebaseContext } from "./components/Firebase";
+import * as ROUTES from "./constants/routes";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+const SignOutButton = () => {
+  const firebase = useContext(FirebaseContext);
+  return <Button onClick={firebase.SignOut}>Sign Out</Button>;
+};
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-          <NavLink className="navbar-brand" to="/">
-            Yeti
-          </NavLink>
-          <Navbar.Toggle aria-controls="navbar-nav" />
-          <Navbar.Collapse id="navbar-nav">
-            <Nav className="mr-auto">
-              <NavLink className="nav-link" to="#features">
-                Features
-              </NavLink>
-              <NavLink className="nav-link" to="#pricing">
-                Pricing
-              </NavLink>
-            </Nav>
-            <Nav>
-              <NavLink className="nav-link" to="/log-in">
-                Log In
-              </NavLink>
-              <NavLink className="nav-link" to="/sign-up">
-                Sign Up
-              </NavLink>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+        <FirebaseContext.Provider value={new Firebase()}>
+          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <NavLink className="navbar-brand" to={ROUTES.HOME}>
+              Yeti
+            </NavLink>
+            <Navbar.Toggle aria-controls="navbar-nav" />
+            <Navbar.Collapse id="navbar-nav">
+              <Nav className="mr-auto">
+                <NavLink className="nav-link" to="#features">
+                  Features
+                </NavLink>
+                <NavLink className="nav-link" to="#pricing">
+                  Pricing
+                </NavLink>
+              </Nav>
+              <Nav>
+                <NavLink className="nav-link" to={ROUTES.LOG_IN}>
+                  Log In
+                </NavLink>
+                <NavLink className="nav-link" to={ROUTES.SIGN_UP}>
+                  Sign Up
+                </NavLink>
+                <SignOutButton />
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
 
-        <Container>
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route path="/log-in" component={Login} />
-            <Route path="/sign-up" component={SignUp} />
-          </Switch>
-        </Container>
+          <Container>
+            <Switch>
+              <Route exact path={ROUTES.HOME} component={LoginPage} />
+              <Route path={ROUTES.LOG_IN} component={LoginPage} />
+              <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+            </Switch>
+          </Container>
+        </FirebaseContext.Provider>
       </div>
     </Router>
   );

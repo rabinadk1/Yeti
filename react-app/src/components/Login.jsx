@@ -1,10 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import * as ROUTES from "../constants/routes";
+import FirebaseContext from "./Firebase/context";
 
-function Login() {
-  const [state, setState] = useState({});
+const LoginPage = () => {
+  const InitialState = {
+    email: "",
+    password: "",
+    rememberMe: false,
+    error: null
+  };
+
+  const history = useHistory();
+  const firebase = useContext(FirebaseContext);
+  const [state, setState] = useState(InitialState);
 
   const handleChange = ({ target }) => {
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -12,14 +23,25 @@ function Login() {
   };
 
   const handleSubmit = event => {
-    alert("Your Form Has Been Submitted!");
     event.preventDefault();
+
+    firebase
+      .SignInWithEmailAndPassword(state.email, state.password)
+      .then(() => {
+        alert("Your Form Has Been Submitted!");
+        setState(InitialState);
+        history.push(ROUTES.HOME);
+      })
+      .catch(error => {
+        setState({ ...state, error });
+      });
   };
 
   return (
     <>
-      <h3 className="text-center mt-2">Login</h3>
+      {state.error && <Alert variant="danger">{state.error.message}</Alert>}
 
+      <h3 className="text-center mt-2">Login</h3>
       <Form className="form-signin" method="post" onSubmit={handleSubmit}>
         <Form.Group controlId="formEmail">
           <Form.Label className="sr-only">Email address</Form.Label>
@@ -27,6 +49,7 @@ function Login() {
             type="email"
             name="email"
             placeholder="Enter Email"
+            value={state.email}
             onChange={handleChange}
             required
           />
@@ -38,6 +61,7 @@ function Login() {
             type="password"
             name="password"
             placeholder="Enter Password"
+            value={state.password}
             onChange={handleChange}
             required
           />
@@ -48,6 +72,7 @@ function Login() {
             type="checkbox"
             name="rememberMe"
             label="Remember Me"
+            checked={state.rememberMe}
             onChange={handleChange}
           />
         </Form.Group>
@@ -55,12 +80,13 @@ function Login() {
         <Button variant="primary" type="submit" block>
           Submit
         </Button>
+
         <Form.Text className="text-center">
           <Link to="#">Forgot Password?</Link>
         </Form.Text>
       </Form>
     </>
   );
-}
+};
 
-export default Login;
+export default LoginPage;
