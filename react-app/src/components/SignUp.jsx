@@ -3,9 +3,11 @@ import { Link, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-// import GetGeoLocation from "../utilities/location.js";
+
+import GetGeoLocation from "../utilities/location.js";
 import * as ROUTES from "../constants/routes";
 import FirebaseContext from "./Firebase/context";
+import Maps from "./Maps";
 
 const SignUpPage = () => {
   const InitialState = {
@@ -19,6 +21,7 @@ const SignUpPage = () => {
   };
   const firebase = useContext(FirebaseContext);
   const [state, setState] = useState(InitialState);
+  const [position, setPosition] = useState({});
   const history = useHistory();
 
   const handleChange = ({ target }) => {
@@ -30,10 +33,6 @@ const SignUpPage = () => {
     if (state.password !== state.confirmPassword)
       alert("The passwords don't match!");
     else {
-      // GetGeoLocation(({ coords }) => {
-      //   const position = { location: [coords.latitude, coords.longitude] };
-      //   if (coords.altitude) position.altitude = coords.altitude;
-      // }, true);
       firebase
         .CreateUserWithEmailAndPassword(state.email, state.password)
         .then(credentials =>
@@ -43,7 +42,9 @@ const SignUpPage = () => {
             .set({
               name: state.name,
               phoneNumber: state.phoneNumber,
-              role: state.role
+              role: state.role,
+              location: state.location,
+              altitude: state.altitude
             })
         )
         .then(() => {
@@ -59,6 +60,13 @@ const SignUpPage = () => {
           setState({ ...state, error });
         });
     }
+  };
+
+  const getGeoLocation = () => {
+    GetGeoLocation(({ coords }) => {
+      console.log(coords);
+      setPosition(coords);
+    }, true);
   };
 
   return (
@@ -122,6 +130,27 @@ const SignUpPage = () => {
             <option value="H">Health Post / Hospital</option>
           </Form.Control>
         </Form.Group>
+
+        {state.role !== "T" && (
+          <>
+            <Form.Group controlId="formLocation">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                name="location"
+                onChange={handleChange}
+                value={
+                  position.latitude
+                    ? `${position.latitude},  ${position.longitude}`
+                    : ""
+                }
+              />
+              <Button onClick={getGeoLocation}>Get GeoLocation</Button>
+            </Form.Group>
+            {position.latitude && (
+              <Maps location={[position.latitude, position.longitude]} />
+            )}
+          </>
+        )}
 
         <Form.Group controlId="formPassword">
           <Form.Label>Password</Form.Label>

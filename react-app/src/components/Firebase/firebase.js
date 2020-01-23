@@ -32,7 +32,6 @@ class Firebase {
           console.log("persistance not available");
       }
     });
-
     this.functions = app.functions();
   }
 
@@ -45,8 +44,8 @@ class Firebase {
 
   SignOut = () => this.auth.signOut();
 
-  ResetPassword = email => this.auth.sendPasswordResetEmail(email);
-  UpdatePassword = password => this.auth.currentUser.updatePassword(password);
+  // ResetPassword = email => this.auth.sendPasswordResetEmail(email);
+  // UpdatePassword = password => this.auth.currentUser.updatePassword(password);
 }
 
 export default Firebase;
