@@ -19,10 +19,10 @@ const App = () => {
     firebase.auth.onAuthStateChanged(user => {
       if (user) {
         user.getIdTokenResult().then(idTokenResult => {
-          if (["T", "V", "H", "R"].includes(idTokenResult.claims.role)) {
-            user.role = idTokenResult.claims.role;
-            console.log("here");
-          } else console.log("Not Here");
+          console.log(idTokenResult.claims);
+          // if (["T", "V", "H", "R"].indexof(idTokenResult.claims.role) !== -1) {
+          //   user.role = idTokenResult.claims.role;
+          // } else console.log("Not Here");
         });
         setAuthUser(user);
       } else setAuthUser(null);

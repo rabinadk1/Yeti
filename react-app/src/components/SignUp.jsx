@@ -38,7 +38,7 @@ const SignUpPage = () => {
         .then(credentials =>
           firebase.db
             .collection("users")
-            .doc(credentials.user.id)
+            .doc(credentials.user.uid)
             .set({
               name: formState.name,
               phoneNumber: formState.phoneNumber,
@@ -46,10 +46,10 @@ const SignUpPage = () => {
               ...position
             })
         )
-        .then(() => {
-          const addRole = firebase.functions.httpsCallable("addRole");
-          addRole({ email: formState.email, role: formState.role });
-        })
+        // .then(() => {
+        //   const addRole = firebase.functions.httpsCallable("addRole");
+        //   addRole({ email: formState.email, role: formState.role });
+        // })
         .then(() => {
           alert("Your Form Has Been Submitted!");
           setFormState(InitialState);
