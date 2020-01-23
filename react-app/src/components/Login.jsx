@@ -32,7 +32,7 @@ const LoginPage = () => {
       .then(() => {
         alert("Your Form Has Been Submitted!");
         setState(InitialState);
-        history.push(ROUTES.HOME);
+        history.push(ROUTES.VOLUNTEER);
       })
       .catch(error => {
         setState({ ...state, error });

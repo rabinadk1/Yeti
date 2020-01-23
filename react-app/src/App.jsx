@@ -38,12 +38,8 @@ const App = () => {
             <Route exact path={ROUTES.HOME} component={LoginPage} />
             <Route path={ROUTES.LOG_IN} component={LoginPage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route exact path="/Volunteer" component={Volunteer} />
-            <Route
-              path="/Volunteers/HospitalsInfo"
-              exact
-              component={HospitalInfo}
-            />
+            <Route path={ROUTES.VOLUNTEER} component={Volunteer} />
+            <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
           </Switch>
         </Container>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Col, Container, Card, Row } from "react-bootstrap";
-import HospitalInfo from "./HospitalInfo";
+import * as ROUTES from "../constants/routes";
 
 const Volunteer = () => {
   return (
@@ -19,7 +19,7 @@ const Volunteer = () => {
             justifyContent: "center"
           }}
         >
-          <Link to="/Volunteers/HospitalsInfo">
+          <Link to={ROUTES.HOSPITAL_INFO}>
             <Button variant="outline-primary" size="lg">
               NearBy Hospitals
             </Button>
