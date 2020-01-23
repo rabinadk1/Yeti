@@ -20,44 +20,43 @@ const SignUpPage = () => {
     error: null
   };
   const firebase = useContext(FirebaseContext);
-  const [state, setState] = useState(InitialState);
+  const [formState, setFormState] = useState(InitialState);
   const [position, setPosition] = useState({});
   const history = useHistory();
 
   const handleChange = ({ target }) => {
-    setState({ ...state, [target.name]: target.value });
+    setFormState({ ...formState, [target.name]: target.value });
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (state.password !== state.confirmPassword)
+    if (formState.password !== formState.confirmPassword)
       alert("The passwords don't match!");
     else {
       firebase
-        .CreateUserWithEmailAndPassword(state.email, state.password)
+        .CreateUserWithEmailAndPassword(formState.email, formState.password)
         .then(credentials =>
           firebase.db
             .collection("users")
             .doc(credentials.user.id)
             .set({
-              name: state.name,
-              phoneNumber: state.phoneNumber,
-              role: state.role,
-              location: state.location,
-              altitude: state.altitude
+              name: formState.name,
+              phoneNumber: formState.phoneNumber,
+              role: formState.role,
+              ...position
             })
         )
         .then(() => {
           const addRole = firebase.functions.httpsCallable("addRole");
-          addRole({ email: state.email, role: state.role });
+          addRole({ email: formState.email, role: formState.role });
         })
         .then(() => {
           alert("Your Form Has Been Submitted!");
-          setState(InitialState);
+          setFormState(InitialState);
           history.push(ROUTES.HOME);
         })
         .catch(error => {
-          setState({ ...state, error });
+          setFormState({ ...formState, error });
         });
     }
   };
@@ -84,7 +83,9 @@ const SignUpPage = () => {
 
   return (
     <>
-      {state.error && <Alert variant="danger">{state.error.message}</Alert>}
+      {formState.error && (
+        <Alert variant="danger">{formState.error.message}</Alert>
+      )}
       <h3 className="text-center mt-2">Sign Up</h3>
 
       <Form method="post" className="form-signup" onSubmit={handleSubmit}>
@@ -93,7 +94,7 @@ const SignUpPage = () => {
           <Form.Control
             name="name"
             placeholder="eg: John Doe"
-            value={state.name}
+            value={formState.name}
             onChange={handleChange}
             required
           />
@@ -105,7 +106,7 @@ const SignUpPage = () => {
             name="email"
             type="email"
             placeholder="eg: pranav@explorer.com"
-            value={state.email}
+            value={formState.email}
             onChange={handleChange}
             required
           />
@@ -117,7 +118,7 @@ const SignUpPage = () => {
             name="phoneNumber"
             type="tel"
             placeholder="eg: 9868986821"
-            value={state.phoneNumber}
+            value={formState.phoneNumber}
             minLength="8"
             maxLength="10"
             onChange={handleChange}
@@ -135,7 +136,7 @@ const SignUpPage = () => {
             name="role"
             as="select"
             onChange={handleChange}
-            selected={state.role}
+            selected={formState.role}
           >
             <option value="T">Tourist</option>
             <option value="V">Volunteer</option>
@@ -144,7 +145,7 @@ const SignUpPage = () => {
           </Form.Control>
         </Form.Group>
 
-        {state.role !== "T" && (
+        {formState.role !== "T" && (
           <>
             <Form.Group controlId="formLocation">
               <Form.Label>Location</Form.Label>
@@ -170,7 +171,7 @@ const SignUpPage = () => {
             name="password"
             type="password"
             placeholder="Enter Password"
-            selected={state.password}
+            selected={formState.password}
             onChange={handleChange}
             required
           />
@@ -182,7 +183,7 @@ const SignUpPage = () => {
             name="confirmPassword"
             type="password"
             placeholder="Re-enter Password"
-            selected={state.confirmPassword}
+            selected={formState.confirmPassword}
             onChange={handleChange}
             required
           />
@@ -192,7 +193,7 @@ const SignUpPage = () => {
           variant="primary"
           type="submit"
           block
-          disabled={state.password !== state.confirmPassword}
+          disabled={formState.password !== formState.confirmPassword}
         >
           Submit
         </Button>

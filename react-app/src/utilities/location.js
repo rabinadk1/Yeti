@@ -1,10 +1,10 @@
-function GetGeoLocation(
+const GetGeoLocation = (
   successCallback,
   enableHighAccuracy = false,
   maximumAge = 60 * 1000,
   timeout = 10 * 1000,
   verbose = false
-) {
+) => {
   if (typeof successCallback !== "function") {
     console.log("Please provide a callback function as the first argument");
     return -1;
@@ -45,6 +45,6 @@ function GetGeoLocation(
   } else if (verbose)
     console.log("Geolocation is not supported for this Browser/OS.");
   return -1;
-}
+};
 
 export default GetGeoLocation;
