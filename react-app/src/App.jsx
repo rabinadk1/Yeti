@@ -69,6 +69,8 @@ function App() {
       */}
       <Router>
         <Route exact path="/" component={Volunteer} />
+        {/* This must be removed when integrated */}
+        <Route exact path="/Volunteer" component={Volunteer} />
         <Route
           path="/Volunteers/HospitalsInfo"
           exact
