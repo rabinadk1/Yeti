@@ -160,7 +160,7 @@ const SignUpPage = () => {
               <Button onClick={getGeoLocation}>Get GeoLocation</Button>
             </Form.Group>
             {position.latitude && (
-              <Maps location={[position.latitude, position.longitude]} />
+              <Maps position={position} setPosition={setPosition} />
             )}
           </>
         )}
