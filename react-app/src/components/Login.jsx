@@ -78,7 +78,6 @@ const LoginPage = () => {
             onChange={handleChange}
           />
         </Form.Group>
-
         <Button variant="primary" type="submit" block>
           Submit
         </Button>

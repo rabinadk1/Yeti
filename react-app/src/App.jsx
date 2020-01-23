@@ -8,6 +8,8 @@ import Navigation from "./components/Navigation";
 import { FirebaseContext } from "./components/Firebase";
 import * as ROUTES from "./constants/routes";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Volunteer from "./components/Volunteer";
+import HospitalInfo from "./components/HospitalInfo";
 
 const App = () => {
   const [authUser, setAuthUser] = useState(null);
@@ -36,6 +38,12 @@ const App = () => {
             <Route exact path={ROUTES.HOME} component={LoginPage} />
             <Route path={ROUTES.LOG_IN} component={LoginPage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+            <Route exact path="/Volunteer" component={Volunteer} />
+            <Route
+              path="/Volunteers/HospitalsInfo"
+              exact
+              component={HospitalInfo}
+            />
           </Switch>
         </Container>
       </div>
