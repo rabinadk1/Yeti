@@ -14,7 +14,6 @@ const LoginPage = () => {
     rememberMe: false,
     error: null
   };
-
   const history = useHistory();
   const firebase = useContext(FirebaseContext);
   const [state, setState] = useState(InitialState);

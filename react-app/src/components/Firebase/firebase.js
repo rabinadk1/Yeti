@@ -46,6 +46,28 @@ class Firebase {
 
   // ResetPassword = email => this.auth.sendPasswordResetEmail(email);
   // UpdatePassword = password => this.auth.currentUser.updatePassword(password);
+
+  GetVolunteers = () =>
+    this.db
+      .collection("users")
+      .where("role", "==", "V")
+      .get();
+
+  GetTourists = () =>
+    this.db
+      .collection("users")
+      .where("role", "==", "T")
+      .get();
+  GetHospitals = () =>
+    this.db
+      .collection("users")
+      .where("role", "==", "H")
+      .get();
+  GetRescue = () =>
+    this.db
+      .collection("users")
+      .where("role", "==", "R")
+      .get();
 }
 
 export default Firebase;

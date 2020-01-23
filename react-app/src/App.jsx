@@ -16,6 +16,19 @@ const App = () => {
   const firebase = useContext(FirebaseContext);
 
   useEffect(() => {
+    console.log("Hello tro");
+    firebase
+      .GetVolunteers()
+      .then(qSnap => {
+        console.log(qSnap);
+        qSnap.forEach(doc => {
+          console.log(doc.id, " => ", doc.data());
+        });
+      })
+      .catch(err => {
+        console.log("Error getting documents: ", err);
+      });
+
     firebase.auth.onAuthStateChanged(user => {
       if (user) {
         user.getIdTokenResult().then(idTokenResult => {

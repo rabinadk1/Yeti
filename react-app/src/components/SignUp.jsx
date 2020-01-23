@@ -46,14 +46,13 @@ const SignUpPage = () => {
               ...position
             })
         )
-        // .then(() => {
-        //   const addRole = firebase.functions.httpsCallable("addRole");
-        //   addRole({ email: formState.email, role: formState.role });
-        // })
         .then(() => {
-          alert("Your Form Has Been Submitted!");
+          const addRole = firebase.functions.httpsCallable("addRole");
+          addRole({ email: formState.email, role: formState.role });
+        })
+        .then(() => {
           setFormState(InitialState);
-          history.push(ROUTES.HOME);
+          history.push(ROUTES.VOLUNTEER);
         })
         .catch(error => {
           setFormState({ ...formState, error });
