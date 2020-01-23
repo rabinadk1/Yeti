@@ -62,6 +62,19 @@ const SignUpPage = () => {
     }
   };
 
+  const handleLocationChange = ({ target }) => {
+    let pos = target.value.split(",");
+    if (pos.length === 2) {
+      pos = pos.map(el => parseFloat(el));
+      if (pos.filter(el => isNaN(el)).length === 0)
+        setPosition({
+          ...position,
+          latitude: pos[0],
+          longitude: pos[1]
+        });
+    }
+  };
+
   const getGeoLocation = () => {
     GetGeoLocation(({ coords }) => {
       console.log(coords);
@@ -137,12 +150,11 @@ const SignUpPage = () => {
               <Form.Label>Location</Form.Label>
               <Form.Control
                 name="location"
-                onChange={handleChange}
-                value={
-                  position.latitude
-                    ? `${position.latitude},  ${position.longitude}`
-                    : ""
-                }
+                onChange={handleLocationChange}
+                // value={
+                // position.updateLocation &&
+                // `${position.latitude}, ${position.longitude}`
+                // }
               />
               <Button onClick={getGeoLocation}>Get GeoLocation</Button>
             </Form.Group>
