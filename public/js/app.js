@@ -1,3 +1,5 @@
+const messaging =firebase.messaging();
+messaging.usePublicVapidKey('BHOIgWIJrSWYaXWL6p0EFy0i_FseDxTQFBFGKZzseSCKhBd0Auq5pnbQcIWQ8Y6RZ6fb1bRO33GfxY3rFQqrJ9M');
 const notificationButton = document.getElementById("enableNotifications");
 let swRegistration = null;
 
@@ -14,7 +16,6 @@ function initializeApp() {
           console.log('Service Worker is registered', swReg);
           // We are storing the service worker, globally
           swRegistration = swReg;
-          initializeUi();
         })
         .catch(error => {
           console.error('Service Worker Error', error);
@@ -24,39 +25,22 @@ function initializeApp() {
       notificationButton.textContent = 'Push Not Supported';
     }
   }
-  function initializeUi() {
-    notificationButton.addEventListener("click", () => {
-      displayNotification();
-    });
-  }
-  
-  function displayNotification() {
-    if (window.Notification && Notification.permission === "granted") {
-      notification();
-    }
-    // If the user hasn't told if he wants to be notified or not
-    // Note: because of Chrome, we are not sure the permission property
-    // is set, therefore it's unsafe to check for the "default" value.
-    else if (window.Notification && Notification.permission !== "denied") {
-      Notification.requestPermission(status => {
-        if (status === "granted") {
-          notification();
-        } else {
-          alert("You denied or dismissed permissions to notifications.");
-        }
-      });
-    } else {
-      // If the user refuses to get notified
-      alert(
-        "You denied permissions to notifications. Please go to your browser or phone setting to allow notifications."
-      );
-    }
-  }
-  
-  function notification() {
-    const options = {
-      body: "I am in danger!!Help!!",
-      icon: "/img/dish.png"
-    };
-    swRegistration.showNotification("PWA Notification!", options);
-  }
+
+
+  messaging.requestPermission()
+  .then(function(){
+    console.log('Have Permission');
+    return messaging.getToken();
+  })
+   .then(function(token){
+     console.log(token);
+   })
+  .catch(function(err)
+  {
+    console.log('Error Occured');
+  })
+
+  messaging.onMessage(function(payload) {
+    alert('Notification recieved!');
+    swRegistration.showNotification("PWA noti","HYD");
+});

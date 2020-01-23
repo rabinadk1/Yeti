@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Food Ninja</title>
-
+    <link rel="shortcut icon" href="">
     <!-- materialize icons, css & js -->
     <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -79,32 +79,33 @@
       </form>
     </div>
 
+
     <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
-
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
-
 
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
-    <script>
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyDShxDUf327-0bxbmxklcAjD1RzJjHZPyI",
-        authDomain: "yeti-e974f.firebaseapp.com",
-        databaseURL: "https://yeti-e974f.firebaseio.com",
-        projectId: "yeti-e974f",
-        storageBucket: "yeti-e974f.appspot.com",
-        messagingSenderId: "951646023489",
-        appId: "1:951646023489:web:fdfd736c60befe9ab2fbc0",
-        measurementId: "G-YSYM01FL62"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-    </script>
-    <script src="/js/app.js"></script>
-    <script src="/js/db.js"></script>
-    <script src="/js/ui.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-messaging.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCpcRFDuP-HryUvla3go_pBd0d9Am8xRug",
+    authDomain: "tourismhelp-a5dd7.firebaseapp.com",
+    databaseURL: "https://tourismhelp-a5dd7.firebaseio.com",
+    projectId: "tourismhelp-a5dd7",
+    storageBucket: "tourismhelp-a5dd7.appspot.com",
+    messagingSenderId: "810001041984",
+    appId: "1:810001041984:web:508faf28d53354d9152da5",
+    measurementId: "G-XT28Y09YMG"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  //const db=firebase.firestore();
+  </script>
+  <script src="/js/app.js"></script>
+  <script src="/js/db.js"></script>
+  <script src="/js/ui.js"></script>
   
 
   </body>

@@ -14,9 +14,9 @@ db.enablePersistence().catch(err => {
 });
 
 // real-time listener
-db.collection("recipes").onSnapshot(snapshot => {
+db.collection("user").onSnapshot(snapshot => {
   snapshot.docChanges().forEach(change => {
-    if (change.type === "added") renderRecipe(change.doc.data(), change.doc.id);
+    if (change.type === "added") renderRecipe(change.doc.data(), change.doc.id) ;
     else if (change.type === "removed") removeRecipe(change.doc.id);
   });
 });
@@ -26,13 +26,13 @@ const form = document.querySelector("form");
 form.addEventListener("submit", evt => {
   evt.preventDefault();
 
-  const recipe = {
-    name: form.title.value,
-    ingredients: form.ingredients.value
+  const user = {
+    username: form.title.value,
+    password: form.ingredients.value
   };
 
-  db.collection("recipes")
-    .add(recipe)
+  db.collection("user")
+    .add(user)
     .catch(err => console.log(err));
 
   form.title.value = "";
@@ -44,7 +44,7 @@ document.querySelector(".recipes").onclick = evt => {
   if (evt.target.tagName === "I") {
     const id = evt.target.getAttribute("data-id");
     //console.log(id);
-    db.collection("recipes")
+    db.collection("user")
       .doc(id)
       .delete();
   }
