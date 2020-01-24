@@ -13,6 +13,7 @@ import "./App.css";
 import Volunteer from "./components/Volunteer";
 import Tourist from "./components/Tourist";
 import Homepage from "./components/Homepage";
+import MapShowingOther from "./components/MapShowingOther";
 
 const App = () => {
   const [authUser, setAuthUser] = useState(null);
@@ -56,6 +57,7 @@ const App = () => {
             <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
             <Route path={ROUTES.LOG_IN} component={LoginPage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+            <Route path={ROUTES.SEE_OTHER} component={MapShowingOther} />
           </Switch>
         </Container>
       </div>

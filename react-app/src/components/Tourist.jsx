@@ -9,7 +9,12 @@ const Tourist = ({ authUser }) => {
       {authUser && authUser.tourist ? (
         <div>
           <HelpButton />
-          <Button variant="outline-success" size="lg" block>
+          <Button
+            variant="outline-success"
+            size="lg"
+            block
+            onClick={() => history.push(ROUTES.SEE_OTHER)}
+          >
             Hospitals Near me
           </Button>
         </div>
