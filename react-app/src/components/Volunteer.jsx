@@ -1,42 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Col, Container, Card, Row } from "react-bootstrap";
-import * as ROUTES from "../constants/routes";
+import Button from "react-bootstrap/Button";
+import HelpButton from "./HelpButton";
+import "./HelpButton.css";
 
 const Volunteer = () => {
   return (
     <div>
-      <Container
-        style={{
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
-        <Row
-          style={{
-            margin: 20,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <Link to={ROUTES.HOSPITAL_INFO}>
-            <Button variant="outline-primary" size="lg">
-              NearBy Hospitals
-            </Button>
-          </Link>
-        </Row>
-        <Row
-          style={{
-            margin: 20,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <Button variant="outline-secondary" size="lg">
-            Call for Help
-          </Button>
-        </Row>
-      </Container>
+      <HelpButton />
+      <Button variant="outline-success" size="lg" block>
+        Hospitals Near me
+      </Button>
     </div>
   );
 };

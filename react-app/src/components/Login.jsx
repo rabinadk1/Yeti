@@ -29,7 +29,6 @@ const LoginPage = () => {
     firebase
       .SignInWithEmailAndPassword(state.email, state.password)
       .then(() => {
-        alert("Your Form Has Been Submitted!");
         setState(InitialState);
         history.push(ROUTES.VOLUNTEER);
       })

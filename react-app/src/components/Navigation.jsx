@@ -12,7 +12,7 @@ const SignOutButton = () => {
 };
 
 const Navigation = ({ authUser }) => (
-  <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+  <Navbar collapseOnSelect expand="lg" bg="light">
     <NavLink className="navbar-brand" to={ROUTES.HOME}>
       Yeti
     </NavLink>

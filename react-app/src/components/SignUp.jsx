@@ -86,6 +86,9 @@ const SignUpPage = () => {
         <Alert variant="danger">{formState.error.message}</Alert>
       )}
       <h3 className="text-center mt-2">Sign Up</h3>
+      <div className="alert-info p-3 center">
+        <p>All fields are mandatory! Pease provide authentic data.</p>
+      </div>
 
       <Form method="post" className="form-signup" onSubmit={handleSubmit}>
         <Form.Group controlId="formName">

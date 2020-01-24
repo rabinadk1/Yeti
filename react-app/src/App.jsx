@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 
 import LoginPage from "./components/Login";
 import SignUpPage from "./components/SignUp";
+import HelpPage from "./components/HelpPage";
 import Navigation from "./components/Navigation";
 import { FirebaseContext } from "./components/Firebase";
 import * as ROUTES from "./constants/routes";
@@ -48,10 +49,10 @@ const App = () => {
         <Navigation authUser={authUser} />
         <Container>
           <Switch>
-            <Route exact path={ROUTES.HOME} component={LoginPage} />
+            <Route exact path={ROUTES.HOME} component={HelpPage} />
             <Route path={ROUTES.LOG_IN} component={LoginPage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route path={ROUTES.VOLUNTEER} component={Volunteer} />
+            <Route path={ROUTES.VOLUNTEER} component={HelpPage} />
             <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
           </Switch>
         </Container>
