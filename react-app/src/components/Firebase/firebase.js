@@ -33,6 +33,7 @@ class Firebase {
       }
     });
     this.functions = app.functions();
+    this.UsersRef = this.db.collection("users");
   }
 
   // Auth API
@@ -47,27 +48,16 @@ class Firebase {
   // ResetPassword = email => this.auth.sendPasswordResetEmail(email);
   // UpdatePassword = password => this.auth.currentUser.updatePassword(password);
 
-  GetVolunteers = () =>
-    this.db
-      .collection("users")
-      .where("role", "==", "V")
-      .get();
+  GetVolunteers = () => this.UsersRef.where("role", "==", "V").get();
 
-  GetTourists = () =>
-    this.db
-      .collection("users")
-      .where("role", "==", "T")
-      .get();
-  GetHospitals = () =>
-    this.db
-      .collection("users")
-      .where("role", "==", "H")
-      .get();
-  GetRescue = () =>
-    this.db
-      .collection("users")
-      .where("role", "==", "R")
-      .get();
+  GetTourists = () => this.UsersRef.where("role", "==", "T").get();
+
+  GetHospitals = () => this.UsersRef.where("role", "==", "H").get();
+
+  GetRescue = () => this.UsersRef.where("role", "==", "R").get();
+
+  GetNonTourists = () =>
+    this.UsersRef.where("role", "in", ["V", "H", "R"]).get();
 }
 
 export default Firebase;

@@ -9,27 +9,14 @@ import Navigation from "./components/Navigation";
 import { FirebaseContext } from "./components/Firebase";
 import * as ROUTES from "./constants/routes";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Volunteer from "./components/Volunteer";
 import HospitalInfo from "./components/HospitalInfo";
+import MapShowingOther from "./components/MapShowingOther";
 
 const App = () => {
   const [authUser, setAuthUser] = useState(null);
   const firebase = useContext(FirebaseContext);
 
   useEffect(() => {
-    console.log("Hello tro");
-    firebase
-      .GetVolunteers()
-      .then(qSnap => {
-        console.log(qSnap);
-        qSnap.forEach(doc => {
-          console.log(doc.id, " => ", doc.data());
-        });
-      })
-      .catch(err => {
-        console.log("Error getting documents: ", err);
-      });
-
     firebase.auth.onAuthStateChanged(user => {
       if (user) {
         user.getIdTokenResult().then(idTokenResult => {
@@ -52,8 +39,8 @@ const App = () => {
             <Route exact path={ROUTES.HOME} component={HelpPage} />
             <Route path={ROUTES.LOG_IN} component={LoginPage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route path={ROUTES.VOLUNTEER} component={HelpPage} />
             <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
+            <Route path={ROUTES.SEE_OTHER} component={MapShowingOther} />
           </Switch>
         </Container>
       </div>
