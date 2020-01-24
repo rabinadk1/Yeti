@@ -4,39 +4,29 @@ import Container from "react-bootstrap/Container";
 
 import LoginPage from "./components/Login";
 import SignUpPage from "./components/SignUp";
-import HelpPage from "./components/HelpPage";
 import Navigation from "./components/Navigation";
 import { FirebaseContext } from "./components/Firebase";
 import * as ROUTES from "./constants/routes";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Volunteer from "./components/Volunteer";
 import HospitalInfo from "./components/HospitalInfo";
+import "./App.css";
+import Volunteer from "./components/Volunteer";
+import Tourist from "./components/Tourist";
+import Homepage from "./components/Homepage";
 
 const App = () => {
   const [authUser, setAuthUser] = useState(null);
   const firebase = useContext(FirebaseContext);
 
+  // TODO : Fix bug here
+  // useEffect resolves after the app is rendered
+  // resulting in error while reading user
   useEffect(() => {
-    console.log("Hello tro");
-    firebase
-      .GetVolunteers()
-      .then(qSnap => {
-        console.log(qSnap);
-        qSnap.forEach(doc => {
-          console.log(doc.id, " => ", doc.data());
-        });
-      })
-      .catch(err => {
-        console.log("Error getting documents: ", err);
-      });
-
     firebase.auth.onAuthStateChanged(user => {
+      console.log(user);
       if (user) {
         user.getIdTokenResult().then(idTokenResult => {
-          console.log(idTokenResult.claims);
-          // if (["T", "V", "H", "R"].indexof(idTokenResult.claims.role) !== -1) {
-          //   user.role = idTokenResult.claims.role;
-          // } else console.log("Not Here");
+          user.tourist = idTokenResult.claims.tourist;
         });
         setAuthUser(user);
       } else setAuthUser(null);
@@ -49,11 +39,23 @@ const App = () => {
         <Navigation authUser={authUser} />
         <Container>
           <Switch>
-            <Route exact path={ROUTES.HOME} component={HelpPage} />
+            <Route
+              exact
+              path={ROUTES.HOME}
+              render={props => <Homepage {...props} authUser={authUser} />}
+            />
+
+            <Route
+              path={ROUTES.TOURIST}
+              render={props => <Tourist {...props} authUser={authUser} />}
+            />
+            <Route
+              path={ROUTES.VOLUNTEER}
+              render={props => <Volunteer {...props} authUser={authUser} />}
+            />
+            <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
             <Route path={ROUTES.LOG_IN} component={LoginPage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route path={ROUTES.VOLUNTEER} component={HelpPage} />
-            <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
           </Switch>
         </Container>
       </div>

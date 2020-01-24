@@ -48,11 +48,11 @@ const SignUpPage = () => {
         )
         .then(() => {
           const addRole = firebase.functions.httpsCallable("addRole");
-          addRole({ email: formState.email, role: formState.role });
+          return addRole({ email: formState.email, role: formState.role });
         })
         .then(() => {
           setFormState(InitialState);
-          history.push(ROUTES.VOLUNTEER);
+          history.push(ROUTES.HOME);
         })
         .catch(error => {
           setFormState({ ...formState, error });

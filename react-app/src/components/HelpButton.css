@@ -31,8 +31,10 @@
 .sonar-emitter::before {
   font-weight: bold;
   color: white;
-  content: "Help ";
-  font-size: 42px;
+  content: "help!";
+  font-size: 62px;
+  font-style: italic;
+  font-weight: 900;
 }
 
 /* the 'wave', same shape and size as its parent */

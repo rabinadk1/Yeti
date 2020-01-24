@@ -30,7 +30,7 @@ const LoginPage = () => {
       .SignInWithEmailAndPassword(state.email, state.password)
       .then(() => {
         setState(InitialState);
-        history.push(ROUTES.VOLUNTEER);
+        history.push(ROUTES.HOME);
       })
       .catch(error => {
         setState({ ...state, error });

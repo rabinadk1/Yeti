@@ -1,17 +1,19 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import HelpButton from "./HelpButton";
+
 import "./HelpButton.css";
 
-const Volunteer = () => {
-  return (
-    <div>
-      <HelpButton />
-      <Button variant="outline-success" size="lg" block>
-        Hospitals Near me
-      </Button>
-    </div>
-  );
+const Volunteer = ({ authUser }) => {
+  if (authUser && !authUser.tourist) {
+    return (
+      <div>
+        <Button variant="outline-success" size="lg" block>
+          Anyone needs my help?
+        </Button>
+      </div>
+    );
+  }
+  return <div></div>;
 };
 
 export default Volunteer;
