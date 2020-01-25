@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
@@ -8,13 +8,23 @@ import * as ROUTES from "../constants/routes";
 
 const SignOutButton = () => {
   const firebase = useContext(FirebaseContext);
-  return <Button onClick={firebase.SignOut}>Sign Out</Button>;
+  const history = useHistory();
+  return (
+    <Button
+      onClick={() => {
+        firebase.SignOut();
+        history.push(ROUTES.HOME);
+      }}
+    >
+      Sign Out
+    </Button>
+  );
 };
 
 const Navigation = ({ authUser }) => (
   <Navbar collapseOnSelect expand="lg" bg="light">
     <NavLink className="navbar-brand" to={ROUTES.HOME}>
-      Yeti
+      रक्षक
     </NavLink>
     <Navbar.Toggle aria-controls="navbar-nav" />
     <Navbar.Collapse id="navbar-nav">

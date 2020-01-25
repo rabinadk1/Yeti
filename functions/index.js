@@ -10,13 +10,19 @@ exports.addRole = functions.https.onCall((data, context) => {
     .auth()
     .getUserByEmail(data.email)
     .then(user => {
-      return admin.auth().setCustomUserClaims(user.uid, {
-        role: data.role
-      });
+      if (data.role === "T") {
+        return admin.auth().setCustomUserClaims(user.uid, {
+          tourist: true
+        });
+      } else {
+        return admin.auth().setCustomUserClaims(user.uid, {
+          tourist: false
+        });
+      }
     })
     .then(() => {
       return {
-        message: `Success! ${data.email} has been registered!`
+        message: `Successfully registered!`
       };
     })
     .catch(error => {
