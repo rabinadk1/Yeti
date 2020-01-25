@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 import * as ROUTES from "../constants/routes";
 import HelpButton from "./HelpButton";
 import SessionContext from "./SessionContext";
-import "./HelpButton.css";
 
 const Tourist = () => {
   const history = useHistory();
