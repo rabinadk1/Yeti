@@ -14,7 +14,7 @@ const userMap = {
 // For Non-Tourists
 const red_marker = new Icon({
   iconUrl: require("../images/red_marker.png"),
-  iconSize: [25, 25]
+  iconSize: [25, 40]
 });
 
 // For Tourists
@@ -33,14 +33,22 @@ export default function MapShowingOther() {
       snapshot.docChanges().forEach(change => {
         switch (change.type) {
           case "added":
-            setUsers(u => [...u, { id: change.doc.id, ...change.doc.data() }]);
+            const userData = change.doc.data();
+            if (userData.role !== "T" || userData.toRescue)
+              setUsers(u => [
+                ...u,
+                {
+                  id: change.doc.id,
+                  ...userData
+                }
+              ]);
             console.log("Added", change.doc.id, change.doc.data());
             break;
 
           // For change.type === "removed"
           default:
             setUsers(u => u.filter(el => el.id !== change.doc.id));
-          // console.log("Removed", change.doc.id, change.doc.data());
+            console.log("Removed", change.doc.id, change.doc.data());
         }
       });
     });
@@ -98,43 +106,6 @@ export default function MapShowingOther() {
           </Popup>
         </Marker>
       ))}
-      {/* {tourists.map((tourist, index) => (
-        <Marker
-          key={tourist.id}
-          position={[pos[0] + 0.1 * index, pos[1]]}
-          icon={blue_marker}
-        >
-          <Popup minWidth={90}>
-            <div>
-              <h2>{tourist.name}</h2>
-              <p>
-                <a href={`tel:${tourist.phoneNumber}`}>
-                  Call At: {tourist.phoneNumber}
-                </a>
-              </p>
-            </div>
-          </Popup>
-        </Marker>
-      ))} */}
-      {/* {nonTourists.map((nonTourist, index) => (
-        <Marker
-          key={nonTourist.id}
-          position={[pos[0] + 0.1 * index, pos[1]]}
-          icon={red_marker}
-        >
-          <Popup minWidth={90}>
-            <div>
-              <h2>{nonTourist.name}</h2>
-              <p>
-                <strong>{nonTouristMap[nonTourist.role]}</strong>
-                <a href={`tel:${nonTourist.phoneNumber}`}>
-                  Call At: {nonTourist.phoneNumber}
-                </a>
-              </p>
-            </div>
-          </Popup>
-        </Marker>
-      ))} */}
     </Map>
   );
 }
