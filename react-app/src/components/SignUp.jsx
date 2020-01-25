@@ -32,10 +32,12 @@ const SignUpPage = () => {
   const locationInputRef = createRef();
 
   useEffect(() => {
-    const locationInput = locationInputRef.current;
-    if (locationInput)
-      locationInput.value = `${position.latitude}, ${position.longitude}`;
-  }, [position]);
+    if (Object.keys(position).length !== 0) {
+      const locationInput = locationInputRef.current;
+      if (locationInput)
+        locationInput.value = `${position.latitude}, ${position.longitude}`;
+    }
+  }, [locationInputRef, position]);
 
   const handleChange = ({ target }) => {
     setFormState({ ...formState, [target.name]: target.value });

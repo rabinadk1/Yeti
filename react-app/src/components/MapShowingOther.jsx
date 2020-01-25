@@ -6,6 +6,7 @@ import { Icon } from "leaflet";
 import * as ROUTES from "../constants/routes";
 import { FirebaseContext } from "./Firebase";
 import SessionContext from "./SessionContext";
+import GetGeoLocation from "../utilities/location";
 import "./Maps.css";
 
 const userMap = {
@@ -18,7 +19,7 @@ const userMap = {
 // For Non-Tourists
 const red_marker = new Icon({
   iconUrl: require("../images/red_marker.png"),
-  iconSize: [25, 40]
+  iconSize: [35, 35]
 });
 
 // For Tourists
@@ -36,6 +37,14 @@ export default function MapShowingOther() {
   const [users, setUsers] = useState([]);
   const firebase = useContext(FirebaseContext);
 
+  const [currentLocation, setCurrentLocation] = useState([27.68214, 85.32392]);
+
+  useEffect(() => {
+    GetGeoLocation(({ coords }) => {
+      setCurrentLocation([coords.latitude, coords.longitude]);
+    });
+  }, []);
+
   useEffect(() => {
     firebase.UsersRef.onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
@@ -50,7 +59,7 @@ export default function MapShowingOther() {
                   ...userData
                 }
               ]);
-            console.log("Added", change.doc.id, change.doc.data());
+            console.log("Added", change.doc.id, userData);
             break;
 
           // For change.type === "removed"
@@ -86,18 +95,16 @@ export default function MapShowingOther() {
     //   });
   }, [firebase.UsersRef]);
 
-  const pos = [24, 86];
-
   return (
-    <Map center={pos} zoom={13}>
+    <Map center={currentLocation} zoom={8} id="mapShowingOther">
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
-      {users.map((user, index) => (
+      {users.map(user => (
         <Marker
           key={user.id}
-          position={[pos[0] + 0.1 * index, pos[1]]}
+          position={[user.latitude, user.longitude]}
           icon={user.role === "T" ? blue_marker : red_marker}
         >
           <Popup minWidth={90}>
