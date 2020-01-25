@@ -1,4 +1,4 @@
-import React, { useState, useContext, createRef } from "react";
+import React, { useState, useContext, createRef, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -30,6 +30,12 @@ const SignUpPage = () => {
   const [formState, setFormState] = useState(InitialState);
   const [position, setPosition] = useState({});
   const locationInputRef = createRef();
+
+  useEffect(() => {
+    const locationInput = locationInputRef.current;
+    if (locationInput)
+      locationInput.value = `${position.latitude}, ${position.longitude}`;
+  }, [position]);
 
   const handleChange = ({ target }) => {
     setFormState({ ...formState, [target.name]: target.value });
@@ -77,9 +83,6 @@ const SignUpPage = () => {
 
   const getGeoLocation = () => {
     GetGeoLocation(({ coords }) => {
-      const locationInput = locationInputRef.current;
-      if (locationInput)
-        locationInput.value = `${coords.latitude}, ${coords.longitude}`;
       console.log(coords);
       setPosition({
         latitude: coords.latitude,

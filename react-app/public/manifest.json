@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Yeti",
+  "name": "Yeti",
+  "description": "A simple and minimalistic app to rescue tourists during health problems",
   "icons": [
     {
       "src": "favicon.ico",
