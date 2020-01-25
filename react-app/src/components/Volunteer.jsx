@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import SessionContext from "./SessionContext";
+import * as ROUTES from "../constants/routes";
 
 import "./HelpButton.css";
 
-const Volunteer = ({ authUser }) => {
-  if (authUser && !authUser.tourist) {
-    return (
-      <div>
-        <Button variant="outline-success" size="lg" block>
-          Anyone needs my help?
-        </Button>
-      </div>
-    );
-  }
-  return <div></div>;
+const Volunteer = () => {
+  const history = useHistory();
+
+  const authUser = useContext(SessionContext);
+  if (!authUser) history.push(ROUTES.LOG_IN);
+
+  return (
+    <div>
+      <Button variant="outline-success" size="lg" block>
+        Anyone needs my help?
+      </Button>
+    </div>
+  );
 };
 
 export default Volunteer;

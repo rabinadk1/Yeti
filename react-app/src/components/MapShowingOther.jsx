@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import { Icon } from "leaflet";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import * as ROUTES from "../constants/routes";
 import { FirebaseContext } from "./Firebase";
 import SessionContext from "./SessionContext";
@@ -107,7 +108,8 @@ export default function MapShowingOther() {
                 {userMap[user.role]}
                 <br />
                 <a href={`tel:${user.phoneNumber}`}>
-                  Call At: {user.phoneNumber}
+                  <FontAwesomeIcon icon={faPhoneAlt} />
+                  {user.phoneNumber}
                 </a>
               </p>
             </div>

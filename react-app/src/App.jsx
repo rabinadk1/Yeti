@@ -42,20 +42,10 @@ const App = () => {
         <Container>
           <Switch>
             <SessionContext.Provider value={authUser}>
-              <Route
-                exact
-                path={ROUTES.HOME}
-                render={props => <Homepage {...props} authUser={authUser} />}
-              />
+              <Route exact path={ROUTES.HOME} component={Homepage} />
 
-              <Route
-                path={ROUTES.TOURIST}
-                render={props => <Tourist {...props} authUser={authUser} />}
-              />
-              <Route
-                path={ROUTES.VOLUNTEER}
-                render={props => <Volunteer {...props} authUser={authUser} />}
-              />
+              <Route path={ROUTES.TOURIST} component={Tourist} />
+              <Route path={ROUTES.VOLUNTEER} component={Volunteer} />
               <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
               <Route path={ROUTES.LOG_IN} component={LoginPage} />
               <Route path={ROUTES.SIGN_UP} component={SignUpPage} />

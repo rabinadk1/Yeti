@@ -22,7 +22,7 @@ const Tourist = () => {
         block
         onClick={() => history.push(ROUTES.SEE_OTHER)}
       >
-        Hospitals Near me
+        Helpers Near me
       </Button>
     </div>
   );
