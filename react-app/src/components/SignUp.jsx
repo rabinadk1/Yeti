@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, createRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -9,20 +9,22 @@ import * as ROUTES from "../constants/routes";
 import FirebaseContext from "./Firebase/context";
 import Maps from "./Maps";
 
+const InitialState = {
+  name: "",
+  email: "",
+  phoneNumber: "",
+  role: "T",
+  password: "",
+  confirmPassword: "",
+  error: null
+};
+
 const SignUpPage = () => {
-  const InitialState = {
-    name: "",
-    email: "",
-    phoneNumber: "",
-    role: "T",
-    password: "",
-    confirmPassword: "",
-    error: null
-  };
   const firebase = useContext(FirebaseContext);
   const [formState, setFormState] = useState(InitialState);
   const [position, setPosition] = useState({});
   const history = useHistory();
+  const locationInputRef = createRef();
 
   const handleChange = ({ target }) => {
     setFormState({ ...formState, [target.name]: target.value });
@@ -30,34 +32,30 @@ const SignUpPage = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (formState.password !== formState.confirmPassword)
-      alert("The passwords don't match!");
-    else {
-      firebase
-        .CreateUserWithEmailAndPassword(formState.email, formState.password)
-        .then(credentials =>
-          firebase.db
-            .collection("users")
-            .doc(credentials.user.uid)
-            .set({
-              name: formState.name,
-              phoneNumber: formState.phoneNumber,
-              role: formState.role,
-              ...position
-            })
-        )
-        .then(() => {
-          const addRole = firebase.functions.httpsCallable("addRole");
-          addRole({ email: formState.email, role: formState.role });
-        })
-        .then(() => {
-          setFormState(InitialState);
-          history.push(ROUTES.VOLUNTEER);
-        })
-        .catch(error => {
-          setFormState({ ...formState, error });
-        });
-    }
+    firebase
+      .CreateUserWithEmailAndPassword(formState.email, formState.password)
+      .then(credentials =>
+        firebase.db
+          .collection("users")
+          .doc(credentials.user.uid)
+          .set({
+            name: formState.name,
+            phoneNumber: formState.phoneNumber,
+            role: formState.role,
+            ...position
+          })
+      )
+      .then(() => {
+        const addRole = firebase.functions.httpsCallable("addRole");
+        addRole({ email: formState.email, role: formState.role });
+      })
+      .then(() => {
+        setFormState(InitialState);
+        history.push(ROUTES.VOLUNTEER);
+      })
+      .catch(error => {
+        setFormState({ ...formState, error });
+      });
   };
 
   const handleLocationChange = ({ target }) => {
@@ -66,7 +64,6 @@ const SignUpPage = () => {
       pos = pos.map(el => parseFloat(el));
       if (pos.filter(el => isNaN(el)).length === 0)
         setPosition({
-          ...position,
           latitude: pos[0],
           longitude: pos[1]
         });
@@ -75,19 +72,26 @@ const SignUpPage = () => {
 
   const getGeoLocation = () => {
     GetGeoLocation(({ coords }) => {
+      const locationInput = locationInputRef.current;
+      if (locationInput)
+        locationInput.value = `${coords.latitude}, ${coords.longitude}`;
       console.log(coords);
-      setPosition(coords);
+      setPosition({
+        latitude: coords.latitude,
+        longitude: coords.longitude
+      });
     }, true);
   };
 
   return (
     <>
+      <h3 className="text-center mt-2">Sign Up</h3>
+
       {formState.error && (
         <Alert variant="danger">{formState.error.message}</Alert>
       )}
-      <h3 className="text-center mt-2">Sign Up</h3>
       <div className="alert-info p-3 center">
-        <p>All fields are mandatory! Pease provide authentic data.</p>
+        <p>All fields are mandatory! Please provide authentic data.</p>
       </div>
 
       <Form method="post" className="form-signup" onSubmit={handleSubmit}>
@@ -154,10 +158,7 @@ const SignUpPage = () => {
               <Form.Control
                 name="location"
                 onChange={handleLocationChange}
-                // value={
-                // position.updateLocation &&
-                // `${position.latitude}, ${position.longitude}`
-                // }
+                ref={locationInputRef}
               />
               <Button onClick={getGeoLocation}>Get GeoLocation</Button>
             </Form.Group>
