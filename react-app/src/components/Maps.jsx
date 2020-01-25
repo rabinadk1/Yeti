@@ -16,7 +16,6 @@ const Maps = ({ position, setPosition }) => {
     if (marker) {
       const markerLoc = marker.leafletElement.getLatLng();
       setPosition({
-        ...position,
         latitude: markerLoc.lat,
         longitude: markerLoc.lng
       });
