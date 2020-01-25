@@ -12,25 +12,9 @@ const Homepage = () => {
   const authUser = useContext(SessionContext);
   if (!authUser) history.push(ROUTES.LOG_IN);
   if (authUser) {
-    if (authUser.tourist) {
-      return (
-        <div>
-          <Tourist authUser={authUser} />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <Volunteer authUser={authUser} />
-        </div>
-      );
-    }
-  } else
-    return (
-      <div>
-        <Alert variant="info">Please login first</Alert>
-      </div>
-    );
+    if (authUser.tourist) return <Tourist authUser={authUser} />;
+    else return <Volunteer authUser={authUser} />;
+  } else return <Alert variant="info">Please login first</Alert>;
 };
 
 export default Homepage;

@@ -97,20 +97,27 @@ export default function MapShowingOther() {
   }, [firebase.UsersRef]);
 
   return (
-    <Map center={currentLocation} zoom={8} id="mapShowingOther">
+    <Map center={currentLocation} zoom={12} id="mapShowingOther">
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
+
+      <Marker position={currentLocation}>
+        <Popup>
+          <h6>Your Location</h6>
+        </Popup>
+      </Marker>
+
       {users.map(user => (
         <Marker
           key={user.id}
           position={[user.latitude, user.longitude]}
           icon={user.role === "T" ? blue_marker : red_marker}
         >
-          <Popup minWidth={90}>
+          <Popup>
             <div>
-              <h2>{user.name}</h2>
+              <h5>{user.name}</h5>
               <p>
                 {userMap[user.role]}
                 <br />
