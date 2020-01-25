@@ -14,6 +14,7 @@ import Volunteer from "./components/Volunteer";
 import Tourist from "./components/Tourist";
 import Homepage from "./components/Homepage";
 import MapShowingOther from "./components/MapShowingOther";
+import SessionContext from "./components/SessionContext";
 
 const App = () => {
   const [authUser, setAuthUser] = useState(null);
@@ -40,24 +41,26 @@ const App = () => {
         <Navigation authUser={authUser} />
         <Container>
           <Switch>
-            <Route
-              exact
-              path={ROUTES.HOME}
-              render={props => <Homepage {...props} authUser={authUser} />}
-            />
+            <SessionContext.Provider value={authUser}>
+              <Route
+                exact
+                path={ROUTES.HOME}
+                render={props => <Homepage {...props} authUser={authUser} />}
+              />
 
-            <Route
-              path={ROUTES.TOURIST}
-              render={props => <Tourist {...props} authUser={authUser} />}
-            />
-            <Route
-              path={ROUTES.VOLUNTEER}
-              render={props => <Volunteer {...props} authUser={authUser} />}
-            />
-            <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
-            <Route path={ROUTES.LOG_IN} component={LoginPage} />
-            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route path={ROUTES.SEE_OTHER} component={MapShowingOther} />
+              <Route
+                path={ROUTES.TOURIST}
+                render={props => <Tourist {...props} authUser={authUser} />}
+              />
+              <Route
+                path={ROUTES.VOLUNTEER}
+                render={props => <Volunteer {...props} authUser={authUser} />}
+              />
+              <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
+              <Route path={ROUTES.LOG_IN} component={LoginPage} />
+              <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+              <Route path={ROUTES.SEE_OTHER} component={MapShowingOther} />
+            </SessionContext.Provider>
           </Switch>
         </Container>
       </div>
