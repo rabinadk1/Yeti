@@ -14,7 +14,7 @@ const Homepage = ({ authUser }) => {
   } else
     return (
       <div>
-        <Alert variant="info">Please login first</Alert>;
+        <Alert variant="info">Please login first</Alert>
       </div>
     );
 };

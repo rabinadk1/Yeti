@@ -2,8 +2,11 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import HelpButton from "./HelpButton";
 import "./HelpButton.css";
+import { useHistory } from "react-router-dom";
+import * as ROUTES from "../constants/routes";
 
 const Tourist = ({ authUser }) => {
+  const history = useHistory();
   return (
     <div>
       {authUser && authUser.tourist ? (
