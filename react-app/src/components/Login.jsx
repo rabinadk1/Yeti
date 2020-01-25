@@ -4,17 +4,23 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
+import SessionContext from "./SessionContext";
 import * as ROUTES from "../constants/routes";
 import FirebaseContext from "./Firebase/context";
 
+const InitialState = {
+  email: "",
+  password: "",
+  rememberMe: false,
+  error: null
+};
+
 const LoginPage = () => {
-  const InitialState = {
-    email: "",
-    password: "",
-    rememberMe: false,
-    error: null
-  };
   const history = useHistory();
+
+  const authUser = useContext(SessionContext);
+  if (authUser) history.push(ROUTES.HOME);
+
   const firebase = useContext(FirebaseContext);
   const [state, setState] = useState(InitialState);
 

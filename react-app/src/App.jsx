@@ -11,6 +11,7 @@ import * as ROUTES from "./constants/routes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HospitalInfo from "./components/HospitalInfo";
 import MapShowingOther from "./components/MapShowingOther";
+import SessionContext from "./components/SessionContext";
 
 const App = () => {
   const [authUser, setAuthUser] = useState(null);
@@ -36,11 +37,13 @@ const App = () => {
         <Navigation authUser={authUser} />
         <Container>
           <Switch>
-            <Route exact path={ROUTES.HOME} component={HelpPage} />
-            <Route path={ROUTES.LOG_IN} component={LoginPage} />
-            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
-            <Route path={ROUTES.SEE_OTHER} component={MapShowingOther} />
+            <SessionContext.Provider value={authUser}>
+              <Route exact path={ROUTES.HOME} component={HelpPage} />
+              <Route path={ROUTES.LOG_IN} component={LoginPage} />
+              <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+              <Route path={ROUTES.HOSPITAL_INFO} component={HospitalInfo} />
+              <Route path={ROUTES.SEE_OTHER} component={MapShowingOther} />
+            </SessionContext.Provider>
           </Switch>
         </Container>
       </div>

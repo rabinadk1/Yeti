@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import { Icon } from "leaflet";
+
+import * as ROUTES from "../constants/routes";
 import { FirebaseContext } from "./Firebase";
+import SessionContext from "./SessionContext";
 import "./Maps.css";
 
 const userMap = {
@@ -24,8 +28,12 @@ const blue_marker = new Icon({
 });
 
 export default function MapShowingOther() {
-  const [users, setUsers] = useState([]);
+  const history = useHistory();
 
+  const authUser = useContext(SessionContext);
+  if (!authUser) history.push(ROUTES.LOG_IN);
+
+  const [users, setUsers] = useState([]);
   const firebase = useContext(FirebaseContext);
 
   useEffect(() => {

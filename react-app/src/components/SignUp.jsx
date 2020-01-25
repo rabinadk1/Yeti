@@ -7,6 +7,7 @@ import Alert from "react-bootstrap/Alert";
 import GetGeoLocation from "../utilities/location.js";
 import * as ROUTES from "../constants/routes";
 import FirebaseContext from "./Firebase/context";
+import SessionContext from "./SessionContext";
 import Maps from "./Maps";
 
 const InitialState = {
@@ -20,10 +21,14 @@ const InitialState = {
 };
 
 const SignUpPage = () => {
+  const history = useHistory();
+
+  const authUser = useContext(SessionContext);
+  if (authUser) history.push(ROUTES.HOME);
+
   const firebase = useContext(FirebaseContext);
   const [formState, setFormState] = useState(InitialState);
   const [position, setPosition] = useState({});
-  const history = useHistory();
   const locationInputRef = createRef();
 
   const handleChange = ({ target }) => {
