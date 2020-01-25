@@ -5,3 +5,4 @@ export const VOLUNTEER = "/volunteer";
 export const TOURIST = "/tourist";
 export const SEE_OTHER = "/seek_help";
 export const HOSPITAL_INFO = "/hospital_info";
+export const ACCOUNT = "/account";

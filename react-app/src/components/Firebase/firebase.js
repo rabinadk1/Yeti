@@ -2,6 +2,7 @@ import app from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/functions";
+import "firebase/messaging";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -45,19 +46,21 @@ class Firebase {
 
   SignOut = () => this.auth.signOut();
 
+  GetUser = doc => this.UsersRef.doc(doc).get();
+
   // ResetPassword = email => this.auth.sendPasswordResetEmail(email);
   // UpdatePassword = password => this.auth.currentUser.updatePassword(password);
 
-  GetVolunteers = () => this.UsersRef.where("role", "==", "V").get();
+  // GetVolunteers = () => this.UsersRef.where("role", "==", "V").get();
 
-  GetTourists = () => this.UsersRef.where("role", "==", "T").get();
+  // GetTourists = () => this.UsersRef.where("role", "==", "T").get();
 
-  GetHospitals = () => this.UsersRef.where("role", "==", "H").get();
+  // GetHospitals = () => this.UsersRef.where("role", "==", "H").get();
 
-  GetRescue = () => this.UsersRef.where("role", "==", "R").get();
+  // GetRescue = () => this.UsersRef.where("role", "==", "R").get();
 
-  GetNonTourists = () =>
-    this.UsersRef.where("role", "in", ["V", "H", "R"]).get();
+  // GetNonTourists = () =>
+  //   this.UsersRef.where("role", "in", ["V", "H", "R"]).get();
 }
 
 export default Firebase;

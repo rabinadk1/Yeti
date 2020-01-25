@@ -39,7 +39,7 @@ const Navigation = ({ authUser }) => (
       <Nav>
         {authUser ? (
           <>
-            <NavLink className="nav-link" to="#account">
+            <NavLink className="nav-link" to={ROUTES.ACCOUNT}>
               Account
             </NavLink>
             <SignOutButton />
