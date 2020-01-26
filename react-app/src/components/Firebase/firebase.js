@@ -53,7 +53,7 @@ class Firebase {
 
   // GetVolunteers = () => this.UsersRef.where("role", "==", "V").get();
 
-  // GetTourists = () => this.UsersRef.where("role", "==", "T").get();
+  GetTourists = () => this.UsersRef.where("role", "==", "T").get();
 
   // GetHospitals = () => this.UsersRef.where("role", "==", "H").get();
 

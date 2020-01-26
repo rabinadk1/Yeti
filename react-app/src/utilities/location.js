@@ -1,7 +1,7 @@
 const GetGeoLocation = (
   successCallback,
   enableHighAccuracy = false,
-  maximumAge = 60 * 1000,
+  maximumAge = 120 * 1000,
   timeout = 10 * 1000,
   verbose = false
 ) => {

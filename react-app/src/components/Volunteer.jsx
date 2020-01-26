@@ -12,9 +12,16 @@ const Volunteer = () => {
   const authUser = useContext(SessionContext);
   if (!authUser) history.push(ROUTES.LOG_IN);
 
+  if (authUser.tourist) history.push(ROUTES.TOURIST);
+
   return (
     <div>
-      <Button variant="outline-success" size="lg" block>
+      <Button
+        variant="outline-success"
+        size="lg"
+        block
+        onClick={() => history.push(ROUTES.VOLUNTEER_MAP)}
+      >
         Anyone needs my help?
       </Button>
     </div>

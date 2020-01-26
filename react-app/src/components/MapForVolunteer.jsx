@@ -11,19 +11,6 @@ import GetGeoLocation from "../utilities/location";
 import Announcement from "./Announcement";
 import "./Maps.css";
 
-const userMap = {
-  H: "Health Post",
-  V: "Volunteers",
-  R: "Rescue Team",
-  T: "Tourist"
-};
-
-// For Non-Tourists
-const red_marker = new Icon({
-  iconUrl: require("../images/red_marker.png"),
-  iconSize: [35, 35]
-});
-
 // For Tourists
 const blue_marker = new Icon({
   iconUrl: require("../images/blue_marker.png"),
@@ -35,13 +22,13 @@ const current_marker = new Icon({
   iconSize: [45, 45]
 });
 
-export default function MapShowingOther() {
+export default function MapForVolunteer() {
   const history = useHistory();
 
   const authUser = useContext(SessionContext);
   if (!authUser) history.push(ROUTES.LOG_IN);
 
-  const [users, setUsers] = useState([]);
+  const [tourists, setTourists] = useState([]);
   const firebase = useContext(FirebaseContext);
 
   const [currentLocation, setCurrentLocation] = useState([27.68214, 85.32392]);
@@ -53,42 +40,20 @@ export default function MapShowingOther() {
   }, []);
 
   useEffect(() => {
-    firebase.UsersRef.onSnapshot(snapshot => {
-      snapshot.docChanges().forEach(change => {
-        const userData = change.doc.data();
-        const userId = change.doc.id;
-        switch (change.type) {
-          case "added":
-          case "modified":
-            if (userData.role !== "T" || userData.toRescue)
-              setUsers(u => [
-                ...u,
-                {
-                  id: userId,
-                  ...userData
-                }
-              ]);
-            console.log(change.type, userId, userData);
-            break;
-          // For change.type === "removed"
-          default:
-            setUsers(u => u.filter(el => el.id !== userId));
-            console.log("Removed", userId, userData);
-        }
+    firebase
+      .GetTourists()
+      .then(querySnapshot => {
+        const docs = [];
+        querySnapshot.forEach(doc => {
+          const userData = doc.data();
+          if (userData.role !== "T" || userData.toRescue)
+            docs.push({ ...userData, id: doc.id });
+        });
+        setTourists(docs);
+      })
+      .catch(err => {
+        console.log("Error getting tourists: ", err);
       });
-    });
-    // firebase
-    //   .GetTourists()
-    //   .then(querySnapshot => {
-    //     const docs = [];
-    //     querySnapshot.forEach(doc => {
-    //       docs.push({ ...doc.data(), id: doc.id });
-    //     });
-    //     setTourists(docs);
-    //   })
-    //   .catch(err => {
-    //     console.log("Error getting tourists: ", err);
-    //   });
     // firebase
     //   .GetNonTourists()
     //   .then(querySnapshot => {
@@ -101,7 +66,7 @@ export default function MapShowingOther() {
     //   .catch(err => {
     //     console.log("Error getting non-tourists: ", err);
     //   });
-  }, [firebase.UsersRef]);
+  }, [firebase]);
 
   return (
     <Map center={currentLocation} zoom={12} id="mapShowingOther">
@@ -118,19 +83,19 @@ export default function MapShowingOther() {
         </Popup>
       </Marker>
 
-      {users.map(user => (
+      {tourists.map(user => (
         <Marker
           key={user.id}
           position={[user.latitude, user.longitude]}
-          icon={user.role === "T" ? blue_marker : red_marker}
+          icon={blue_marker}
         >
           <Popup>
             <div>
               <h5>{user.name}</h5>
               <p>
-                {userMap[user.role]}
+                Tourist
                 <br />
-                {user.role === "T" && <strong>Asking For Help</strong>}
+                <strong>Asking For Help</strong>
                 <br />
                 <a href={`tel:${user.phoneNumber}`}>
                   <FontAwesomeIcon icon={faPhoneAlt} />

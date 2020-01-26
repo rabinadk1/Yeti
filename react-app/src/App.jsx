@@ -18,6 +18,7 @@ const Volunteer = lazy(() => import("./components/Volunteer"));
 const Tourist = lazy(() => import("./components/Tourist"));
 const Homepage = lazy(() => import("./components/Homepage"));
 const AccountPage = lazy(() => import("./components/AccountPage"));
+const VolunteerMap = lazy(() => import("./components/MapForVolunteer"));
 
 const App = () => {
   const [authUser, setAuthUser] = useState(null);
@@ -54,6 +55,7 @@ const App = () => {
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
                 <Route path={ROUTES.SEE_OTHER} component={MapShowingOther} />
                 <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+                <Route path={ROUTES.VOLUNTEER_MAP} component={VolunteerMap} />
               </SessionContext.Provider>
             </Switch>
           </Container>
