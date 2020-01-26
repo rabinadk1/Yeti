@@ -42,6 +42,12 @@ export default function MapShowingOther() {
   if (!authUser) history.push(ROUTES.LOG_IN);
 
   const [users, setUsers] = useState([]);
+  const [needingHelp, setNeedingHelp] = useState({
+    latitude: 27.7,
+    longitude: 85.4,
+    helpNeeded: false
+  });
+
   const firebase = useContext(FirebaseContext);
 
   const [currentLocation, setCurrentLocation] = useState([27.68214, 85.32392]);
@@ -58,8 +64,12 @@ export default function MapShowingOther() {
         const userData = change.doc.data();
         const userId = change.doc.id;
         switch (change.type) {
-          case "added":
           case "modified":
+            setNeedingHelp({
+              ...userData,
+              helpNeeded: true
+            });
+          case "added":
             if (userData.role !== "T" || userData.toRescue)
               setUsers(u => [
                 ...u,
@@ -110,7 +120,12 @@ export default function MapShowingOther() {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
 
-      <Announcement />
+      {needingHelp.helpNeeded && (
+        <Announcement
+          needingHelp={needingHelp}
+          setNeedingHelp={setNeedingHelp}
+        />
+      )}
 
       <Marker position={currentLocation} icon={current_marker}>
         <Popup>

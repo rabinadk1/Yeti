@@ -1,16 +1,19 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Announcement from "react-announcement";
+import * as ROUTES from "../constants/routes";
 
-class Example extends React.Component {
-  render() {
-    return (
-      <Announcement
-        title="Here is your component"
-        subtitle="The best announcement component for React is finally here. Install it in all your projects."
-        link="https://github.com/kristofferandreasen/react-announcement"
-      />
-    );
-  }
-}
+const RescueAnnouncement = ({ needingHelp, setNeedingHelp }) => {
+  useEffect(() => {
+    setNeedingHelp({ helpNeeded: false });
+  }, [setNeedingHelp]);
 
-export default Example;
+  return (
+    <Announcement
+      title="Tourist Asking For Help"
+      subtitle={`${needingHelp.name} is asking for help in ${needingHelp.latitude}, ${needingHelp.longitude}. Contact at ${needingHelp.phoneNumber}`}
+      link={ROUTES.SEE_OTHER}
+    />
+  );
+};
+
+export default RescueAnnouncement;

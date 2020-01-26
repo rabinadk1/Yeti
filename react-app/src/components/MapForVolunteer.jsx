@@ -8,7 +8,6 @@ import * as ROUTES from "../constants/routes";
 import { FirebaseContext } from "./Firebase";
 import SessionContext from "./SessionContext";
 import GetGeoLocation from "../utilities/location";
-import Announcement from "./Announcement";
 import "./Maps.css";
 
 // For Tourists
@@ -54,18 +53,6 @@ export default function MapForVolunteer() {
       .catch(err => {
         console.log("Error getting tourists: ", err);
       });
-    // firebase
-    //   .GetNonTourists()
-    //   .then(querySnapshot => {
-    //     const docs = [];
-    //     querySnapshot.forEach(doc => {
-    //       docs.push({ ...doc.data(), id: doc.id });
-    //     });
-    //     setNonTourists(docs);
-    //   })
-    //   .catch(err => {
-    //     console.log("Error getting non-tourists: ", err);
-    //   });
   }, [firebase]);
 
   return (
@@ -74,8 +61,6 @@ export default function MapForVolunteer() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
-
-      <Announcement />
 
       <Marker position={currentLocation} icon={current_marker}>
         <Popup>
