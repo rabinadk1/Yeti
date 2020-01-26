@@ -32,7 +32,7 @@ const blue_marker = new Icon({
 
 const current_marker = new Icon({
   iconUrl: require("../images/current_marker.png"),
-  iconSize: [45, 45]
+  iconSize: [65, 65]
 });
 
 export default function MapShowingOther() {
@@ -65,19 +65,26 @@ export default function MapShowingOther() {
         const userId = change.doc.id;
         switch (change.type) {
           case "modified":
-            setNeedingHelp({
-              ...userData,
-              helpNeeded: true
-            });
           case "added":
-            if (userData.role !== "T" || userData.toRescue)
-              setUsers(u => [
-                ...u,
-                {
-                  id: userId,
-                  ...userData
-                }
-              ]);
+            if (userData.role !== "T" || userData.toRescue) {
+              if (change.type === "modified") {
+                setNeedingHelp({
+                  ...userData,
+                  helpNeeded: true
+                });
+                setUsers(u => [
+                  ...u.filter(el => el.id !== userId),
+                  { id: userId, ...userData }
+                ]);
+              } else
+                setUsers(u => [
+                  ...u,
+                  {
+                    id: userId,
+                    ...userData
+                  }
+                ]);
+            }
             console.log(change.type, userId, userData);
             break;
           // For change.type === "removed"
@@ -87,30 +94,6 @@ export default function MapShowingOther() {
         }
       });
     });
-    // firebase
-    //   .GetTourists()
-    //   .then(querySnapshot => {
-    //     const docs = [];
-    //     querySnapshot.forEach(doc => {
-    //       docs.push({ ...doc.data(), id: doc.id });
-    //     });
-    //     setTourists(docs);
-    //   })
-    //   .catch(err => {
-    //     console.log("Error getting tourists: ", err);
-    //   });
-    // firebase
-    //   .GetNonTourists()
-    //   .then(querySnapshot => {
-    //     const docs = [];
-    //     querySnapshot.forEach(doc => {
-    //       docs.push({ ...doc.data(), id: doc.id });
-    //     });
-    //     setNonTourists(docs);
-    //   })
-    //   .catch(err => {
-    //     console.log("Error getting non-tourists: ", err);
-    //   });
   }, [firebase.UsersRef]);
 
   return (

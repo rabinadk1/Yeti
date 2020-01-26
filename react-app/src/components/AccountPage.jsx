@@ -34,7 +34,7 @@ export default function AccountPage() {
       <h2>Phone Number: {userInfo.phoneNumber}</h2>
       <h2>Role: {userMap[userInfo.role]}</h2>
       {userInfo.latitude && (
-        <h2>Location:`${(userInfo.latitude, userInfo.longitude)}`</h2>
+        <h2>Location: {`${userInfo.latitude}, ${userInfo.longitude}`}</h2>
       )}
     </>
   ) : (
